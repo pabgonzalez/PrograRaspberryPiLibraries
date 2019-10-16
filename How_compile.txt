@@ -1,0 +1,12 @@
+1-Compile Drivers
+
+gcc -c disdrv.c
+gcc -c joydrv.c
+gcc -c termlib.c
+
+2-Compile Example
+
+gcc Example.c joydrv.o disdrv.o termlib.o -o Example
+
+3-Run Example
+sudo ./Example
