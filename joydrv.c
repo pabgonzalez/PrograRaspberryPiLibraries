@@ -42,7 +42,8 @@
  ******************************************************************************/
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
-
+#define J_INV_FALSE  1			// Keep Default x and y axis Direction
+#define J_INV_TRUE  -1			// Invert default x and y axis Direction
 
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
@@ -58,7 +59,6 @@ typedef enum { JOY_NORMAL } jaxis_t;
 static uint16_t convert(int fd, uint8_t channel, uint8_t mode);
 static void pabort(const char* s);
 
-
 /*******************************************************************************
  * ROM CONST VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
@@ -66,7 +66,7 @@ static void pabort(const char* s);
 
 // SPI variables
 
-static const char *device0 = "/dev/spidev0.0"; // CS0 GPIO8
+//static const char *device0 = "/dev/spidev0.0"; // CS0 GPIO8
 static const char *device1 = "/dev/spidev0.1"; // CS1 GPIO7
 static uint8_t mode;
 static uint8_t bits = 8;
@@ -76,15 +76,11 @@ static uint16_t delay;
 // Driver Variables
 
 static int16_t Sw,Vx,Vy;
-static int8_t offset_x=0;
-static int8_t offset_y=0;
-static jcoord_t joy_coordinates;
-static jswitch_t joy_switch; 
+static int8_t offset_x = 0;
+static int8_t offset_y = 0;
+static jcoord_t joy_coord;
 static bool calib = false;
-static jaxis_t axis = JOY_NORMAL;
-static int8_t joy_invert_axis_x=J_INV_FALSE;
-static int8_t joy_invert_axis_y=J_INV_FALSE;
-
+static const jaxis_t axis = JOY_NORMAL;
 
 /*******************************************************************************
  *******************************************************************************
@@ -93,7 +89,7 @@ static int8_t joy_invert_axis_y=J_INV_FALSE;
  ******************************************************************************/
 int mainTBJ(int argc, char *argv[])  //Sample main Test Bench 
 {
-	jcoord_t joy_coordinates1;
+	jcoord_t joy_coord1;
 	jswitch_t joy_switch1;
 
 	
@@ -103,17 +99,17 @@ int mainTBJ(int argc, char *argv[])  //Sample main Test Bench
 	while(1)
 	{
 		
-		
 		joy_update();
 		
-		joy_coordinates1=joy_get_coord();
+		joy_coord1=joy_get_coord();
+		
 		joy_switch1=joy_get_switch();
 
 		
 		gotoxy(0,0);
 		
 				
-		printf("joy__x %d joy__y %d Switch: %s \n",joy_coordinates1.x,joy_coordinates1.y,(joy_switch1==J_PRESS)?"PRESSED    ":"NOT_PRESSED");
+		printf("joy__x %d joy__y %d Switch: %s \n",joy_coord1.x,joy_coord1.y,(joy_switch1==J_PRESS)?"PRESSED    ":"NOT_PRESSED");
 		
 	}
 	
@@ -137,20 +133,20 @@ int mainTBJ(int argc, char *argv[])  //Sample main Test Bench
 * 
 * Example :
 * * 
-* jcoord_t joy_coordinates1;
+* jcoord_t joy_coord1;
 * int16_t xangle,yangle;
 * 
 * joy_update(); // Read joystick Hardware
-* joy_coordinates1=joy_get_coord();  
+* joy_coord1=joy_get_coord();  
 *  
-* xangle=joy_coordinates1.x  
-* yangle=joy_coordinates1.y
+* xangle=joy_coord1.x  
+* yangle=joy_coord1.y
 * 
 * 
 ------------------------------------------------*/ 
 jcoord_t joy_get_coord(void)
 {
-	return (joy_coordinates);
+	return joy_coord;
 }	
 
 /* ----------------------------------------------
@@ -171,8 +167,7 @@ jcoord_t joy_get_coord(void)
 ------------------------------------------------*/  
 jswitch_t joy_get_switch(void)
 {
-	return ((Sw>100)?J_NOPRESS:J_PRESS);
-	
+	return ((Sw>100) ? J_NOPRESS : J_PRESS);
 }
 
 /* ----------------------------------------------
@@ -183,7 +178,7 @@ jswitch_t joy_get_switch(void)
 
 void joy_init(void)
 { 
-	calib=true;				// Auto cero 
+	calib = true;				// Auto cero 
 }
 
 
@@ -244,47 +239,45 @@ int joy_update(void)
 //	printf("max speed: %d Hz (%d KHz)\n", speed, speed/1000);
 
 
-	Sw=	convert(fd,CH0,SINGLE);
-	Vy=	convert(fd,CH1,SINGLE);
-	Vx=	convert(fd,CH2,SINGLE);
+	Sw = convert(fd,CH0,SINGLE);
+	Vy = convert(fd,CH1,SINGLE);
+	Vx = convert(fd,CH2,SINGLE);
 
 	
 
 //	gotoxy(0,0);
-//  printf("Vx %d Vy %d Sw:%d\n",Vx,Vy,Sw);
-
-
+	printf(WHITE_TEXT "Vx %d Vy %d Sw:%d\n",Vx,Vy,Sw);
+		
 
 //  Translate joystick coordinates so that default joystick position is cero 
-
 	
-	Vx= (Vx-1023/2) ;
-	Vy= -(Vy-1023/2); 
-
+	Vx = (Vx-1023/2);
+	Vy = -(Vy-1023/2); 
 // Retain 8 most significant bits 
 
-	joy_coordinates.x= Vx>>2;  
-	joy_coordinates.y= Vy>>2; 
+	joy_coord.x = Vx >> 2;  
+	joy_coord.y = Vy >> 2; 
+	
+	
 	
 // Calibrate zero position
 	
 	if (calib == true)  
 	{
-	  offset_x = joy_coordinates.x;
-	  offset_y = joy_coordinates.y;
+	  offset_x = joy_coord.x;
+	  offset_y = joy_coord.y;
+		printf(BLUE_TEXT "offset_x: %d , offfset_y: %d\n", offset_x, offset_y);
 	  calib = false;
     }
     
-    joy_coordinates.x-=offset_x;
-	joy_coordinates.y-=offset_y; 
-	
-	(joy_coordinates.x)*=joy_invert_axis_x;
-	(joy_coordinates.y)*=joy_invert_axis_y;
+	if( ((int)joy_coord.x - offset_x >= -128) && ((int)joy_coord.x - offset_x <= 127) )
+    	joy_coord.x -= offset_x;
+	if( ((int)joy_coord.y - offset_y >= -128) && ((int)joy_coord.y - offset_y <= 127) )
+		joy_coord.y -= offset_y; 
 	
 	close(fd);
 	return ret;
 }
-
 
 /*******************************************************************************
  *******************************************************************************
@@ -329,3 +322,5 @@ static void pabort(const char* s)
 	perror(s);
 	abort();
 }
+
+

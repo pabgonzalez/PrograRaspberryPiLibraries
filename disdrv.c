@@ -97,7 +97,7 @@ static void Show_Display_Buffer(void);
 // SPI variables
 
 static const char *device0 = "/dev/spidev0.0";	// CS0 GPIO8 Display
-static const char *device1 = "/dev/spidev0.1";	// CS1 GPIO7 ADC 
+//static const char *device1 = "/dev/spidev0.1";	// CS1 GPIO7 ADC 
 static uint8_t mode;
 static uint8_t bits = 8;
 static uint32_t speed = 100000;					//Hz
@@ -157,8 +157,8 @@ static daxis_t axis = NORMAL;
 
 void disp_write(dcoord_t coord, dlevel_t val)
 {
-	uint8_t x = coord.x;
-	uint8_t y = coord.y;
+	uint8_t x = coord.y;
+	uint8_t y = coord.x;
 
 	uint8_t xp,yp;
 	
@@ -273,7 +273,7 @@ int mainTBD(int argc, char *argv[])  //Sample main Test Bench
 
 	disp_init();				// Initialize Display Hardware 
 
-	set_display_axis(NORMAL);	// Set axis mode 
+	//set_display_axis(NORMAL);	// Set axis mode 
 
 	disp_clear();			// Clears Display buffer and Hardware Display 
 
@@ -282,61 +282,61 @@ int mainTBD(int argc, char *argv[])  //Sample main Test Bench
 // *********** Write Data to display buffer ********** /
 
 
-	dcoord_t point1={3,2};
+	//dcoord_t point1={3,2};
 
-    Send_2_display((dcoord_t){6,3},D_ON); 	//  Turns on pixel 6,3
-    Send_2_display(set_coord(7,2),D_ON); 	//  Turns on pixel 6,3
-    Send_2_display(point1,D_ON); 			//  Turns on pixel at point1
+   //Send_2_display((dcoord_t){6,3},D_ON); 	//  Turns on pixel 6,3
+    //Send_2_display(set_coord(7,2),D_ON); 	//  Turns on pixel 6,3
+    //Send_2_display(point1,D_ON); 			//  Turns on pixel at point1
     
-    disp_write(0,0,D_ON);
-    disp_write(0,1,D_ON);
-    disp_write(0,2,D_ON);
-    disp_write(0,3,D_OFF);
-    disp_write(0,4,D_ON);
-    disp_write(0,5,D_ON);
-    disp_write(0,6,D_ON);
-    disp_write(0,7,D_OFF);
+    disp_write((dcoord_t){0,0},D_ON);
+    disp_write((dcoord_t){0,1},D_ON);
+    disp_write((dcoord_t){0,2},D_ON);
+    disp_write((dcoord_t){0,3},D_OFF);
+    disp_write((dcoord_t){0,4},D_ON);
+    disp_write((dcoord_t){0,5},D_ON);
+    disp_write((dcoord_t){0,6},D_ON);
+    disp_write((dcoord_t){0,7},D_OFF);
 
 
-    disp_write(0,0+8,D_ON);
-    disp_write(0,1+8,D_ON);
-    disp_write(0,2+8,D_ON);
-    disp_write(0,3+8,D_OFF);
-    disp_write(0,4+8,D_ON);
-    disp_write(0,5+8,D_ON);
-    disp_write(0,6+8,D_ON);
-    disp_write(0,7+8,D_OFF);
-
-
-    
-    disp_write(8,0,D_ON);
-    disp_write(8,1,D_ON);
-    disp_write(8,2,D_ON);
-    disp_write(8,3,D_OFF);
-    disp_write(8,4,D_ON);
-    disp_write(8,5,D_ON);
-    disp_write(8,6,D_ON);
-    disp_write(8,7,D_OFF);
+    disp_write((dcoord_t){0,0+8},D_ON);
+    disp_write((dcoord_t){0,1+8},D_ON);
+    disp_write((dcoord_t){0,2+8},D_ON);
+    disp_write((dcoord_t){0,3+8},D_OFF);
+    disp_write((dcoord_t){0,4+8},D_ON);
+    disp_write((dcoord_t){0,5+8},D_ON);
+    disp_write((dcoord_t){0,6+8},D_ON);
+    disp_write((dcoord_t){0,7+8},D_OFF);
 
 
     
-    disp_write(8,0+8,D_ON);
-    disp_write(8,1+8,D_ON);
-    disp_write(8,2+8,D_ON);
-    disp_write(8,3+8,D_OFF);
-    disp_write(8,4+8,D_ON);
-    disp_write(8,5+8,D_ON);
-    disp_write(8,6+8,D_ON);
-    disp_write(8,7+8,D_OFF);
+    disp_write((dcoord_t){8,0},D_ON);
+    disp_write((dcoord_t){8,1},D_ON);
+    disp_write((dcoord_t){8,2},D_ON);
+    disp_write((dcoord_t){8,3},D_OFF);
+    disp_write((dcoord_t){8,4},D_ON);
+    disp_write((dcoord_t){8,5},D_ON);
+    disp_write((dcoord_t){8,6},D_ON);
+    disp_write((dcoord_t){8,7},D_OFF);
+
+
     
-    disp_write(15,0+8,D_ON);
-    disp_write(15,1+8,D_ON);
-    disp_write(15,2+8,D_ON);
-    disp_write(15,3+8,D_OFF);
-    disp_write(15,4+8,D_ON);
-    disp_write(15,5+8,D_ON);
-    disp_write(15,6+8,D_ON);
-    disp_write(15,7+8,D_OFF);
+    disp_write((dcoord_t){8,0+8},D_ON);
+    disp_write((dcoord_t){8,1+8},D_ON);
+    disp_write((dcoord_t){8,2+8},D_ON);
+    disp_write((dcoord_t){8,3+8},D_OFF);
+    disp_write((dcoord_t){8,4+8},D_ON);
+    disp_write((dcoord_t){8,5+8},D_ON);
+    disp_write((dcoord_t){8,6+8},D_ON);
+    disp_write((dcoord_t){8,7+8},D_OFF);
+    
+    disp_write((dcoord_t){15,0+8},D_ON);
+    disp_write((dcoord_t){15,1+8},D_ON);
+    disp_write((dcoord_t){15,2+8},D_ON);
+    disp_write((dcoord_t){15,3+8},D_OFF);
+    disp_write((dcoord_t){15,4+8},D_ON);
+    disp_write((dcoord_t){15,5+8},D_ON);
+    disp_write((dcoord_t){15,6+8},D_ON);
+    disp_write((dcoord_t){15,7+8},D_OFF);
 
 
 	Show_Display_Buffer ();      // just for debug (not a service)

@@ -27,8 +27,8 @@
 #define DISP_CANT_Y_DOTS    16
 
 #define DISP_MIN        0
-#define DISP_MAX_X      (DIS_MIN+DIS_CANT_X_DOTS-1)		// = 15
-#define DISP_MAX_Y      (DIS_MIN+DIS_CANT_Y_DOTS-1)		// = 15
+#define DISP_MAX_X      (DISP_MIN+DISP_CANT_X_DOTS-1)		// = 15
+#define DISP_MAX_Y      (DISP_MIN+DISP_CANT_Y_DOTS-1)		// = 15
 
 
 /*******************************************************************************
@@ -79,9 +79,9 @@ EJEMPLO:
 	dcoord_t myPoint = {};		//inicializa myPoint en (0,0). Recordemos que está arriba a la izquierda.
 	disp_init();
 	int i,j;
-	for ( i = DISP_MIN; i < DISP_MAX_X ; i++ )
+	for ( i = DISP_MIN; i <= DISP_MAX_X ; i++ )
 	{
-		for (j = DISP_MIN; j < (DISP_MAX_Y >> 1); j++)
+		for (j = DISP_MIN; j <= (DISP_MAX_Y >> 1); j++)
 		{
 			myPoint = { i , j };
 			disp_write(myPoint, D_ON);			//prende la mitad de arriba en el buffer. Otra opción es: disp_write({i, j}, D_ON);

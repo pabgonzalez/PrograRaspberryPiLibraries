@@ -53,7 +53,7 @@ void joy_init(void);
 /**
  * @brief Actualiza los valores medidos del joystick. Por lo tanto, debe llamarse antes de usar joy_get_coord() o joy_get_switch()
 */
-void joy_update(void);
+int joy_update(void);		//void
 
 /**
  * @brief Devuelve las coordenadas del joystick medidas al momento del último joy_update()
@@ -68,6 +68,7 @@ jcoord_t joy_get_coord(void);
  * @return Una variable de tipo jswich_t, es decir, J_NOPRESS o J_PRESS.
 */
 jswitch_t joy_get_switch(void);
+
 
 
 /* EJEMPLO: 
