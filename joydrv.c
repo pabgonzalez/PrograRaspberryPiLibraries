@@ -87,34 +87,6 @@ static const jaxis_t axis = JOY_NORMAL;
 						GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
-int mainTBJ(int argc, char *argv[])  //Sample main Test Bench 
-{
-	jcoord_t joy_coord1;
-	jswitch_t joy_switch1;
-
-	
-	clrscr();
-	joy_init();
-	
-	while(1)
-	{
-		
-		joy_update();
-		
-		joy_coord1=joy_get_coord();
-		
-		joy_switch1=joy_get_switch();
-
-		
-		gotoxy(0,0);
-		
-				
-		printf("joy__x %d joy__y %d Switch: %s \n",joy_coord1.x,joy_coord1.y,(joy_switch1==J_PRESS)?"PRESSED    ":"NOT_PRESSED");
-		
-	}
-	
-	return(0);
-}
 
 
 /********************Driver Public Services*********************/
@@ -244,9 +216,6 @@ int joy_update(void)
 	Vx = convert(fd,CH2,SINGLE);
 
 	
-
-//	gotoxy(0,0);
-	printf(WHITE_TEXT "Vx %d Vy %d Sw:%d\n",Vx,Vy,Sw);
 		
 
 //  Translate joystick coordinates so that default joystick position is cero 

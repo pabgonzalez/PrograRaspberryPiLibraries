@@ -12,9 +12,13 @@ int main(void)
 	disp_clear();
 	dcoord_t pos = {DISP_MAX_X>>1 , DISP_MAX_Y>>1};
 	dcoord_t npos = pos;
-	jcoord_t coord;
+	jcoord_t coord = {0,0};
 	do
 	{
+		printf(CYAN_TEXT "Joystick: (%4d,%4d)" , coord.x, coord.y);
+		printf(WHITE_TEXT " | ");
+		printf(RED_TEXT "Display: (%2d,%2d)\n" , npos.x, npos.y);
+		
 		disp_update();
 		joy_update();
 		
@@ -32,6 +36,5 @@ int main(void)
 		disp_write(npos,D_ON);
 		pos = npos;
 		
-		printf(CYAN_TEXT "Current coords: x = %d , y = %d\n" , coord.x, coord.y);	
 	} while( joy_get_switch() == J_NOPRESS );
 }
