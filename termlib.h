@@ -13,7 +13,6 @@ int getch(void);	  // Get a key without waiting for it (no echo)
 int getche(void);	  // Get a key without waiting for it (with echo) 
 int kbhit(void);	  // Returns 1 if a key is waiting in the keyboad buffer
 void changemode(int); // Turns terminal line buffering on or off
- 
 
 #define BUFFERED_ON  1
 #define BUFFERED_OFF 0
@@ -36,6 +35,5 @@ void clrscr();				 // Clear Screen
 #define WHITE_TEXT 		   "\e[37m"
 
 // How to use:  printf(RED_TEXT "Colored Text \n" WHITE_TEXT);
-
 
 #endif
