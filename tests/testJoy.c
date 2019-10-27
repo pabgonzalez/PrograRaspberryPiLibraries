@@ -14,7 +14,7 @@ int main(void)
 	{
 		joy_update();							//primero actualizo las coordenadas medidas
 		myCoords = joy_get_coord();				//luego las guardo en myCoords
-		printf(CYAN_TEXT "Current coords: x = %d , y = %d\n" , myCoords.x, myCoords.y);	
+		printf(CYAN_TEXT "(%4d, %4d)\n" , myCoords.x, myCoords.y);	
 	} while (joy_get_switch() == J_NOPRESS);	//mientras no se presione el switch
 	
 	return 1;
