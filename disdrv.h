@@ -63,7 +63,7 @@ void disp_clear(void);
  * @brief Escribe al buffer, NO al display. 
  * @param coord Estructura de tipo dcoord_t, que contiene las coordenadas del punto al que se quiere escribir. 
 				Recordar que (DISP_MIN < x < DISP_MAX_X) y que (DISP_MIN < y < DISP_MAX_Y). 
- * @param val	valor que se escribirá para el punto indicado por coord. Puede ser D_OFF o D_ON.
+ * @param val	valor que se escribirÃ¡ para el punto indicado por coord. Puede ser D_OFF o D_ON.
  * @return Descripcion valor que devuelve
 */
 void disp_write(dcoord_t coord, dlevel_t val);
@@ -74,25 +74,6 @@ void disp_write(dcoord_t coord, dlevel_t val);
 void disp_update(void);
 
 
-/*
-EJEMPLO:
-	dcoord_t myPoint = {};		//inicializa myPoint en (0,0). Recordemos que está arriba a la izquierda.
-	disp_init();
-	int i,j;
-	for ( i = DISP_MIN; i <= DISP_MAX_X ; i++ )
-	{
-		for (j = DISP_MIN; j <= (DISP_MAX_Y >> 1); j++)
-		{
-			myPoint = { i , j };
-			disp_write(myPoint, D_ON);			//prende la mitad de arriba en el buffer. Otra opción es: disp_write({i, j}, D_ON);
-			printf( "LED {%d, %d} ON en el buffer.\n" , i, j );
-			myPoint = { i , DISP_MAX_Y - j };
-			disp_write(myPoint, D_OFF);			//apaga la mitad de abajo en el buffer
-			printf("LED {%d, %d} OFF en el buffer\n", i, DISP_MAX_Y - j);
-		}
-		disp_update();							//ahora lo vemos en el display
-	}
-*/
 
 /*******************************************************************************
  ******************************************************************************/
