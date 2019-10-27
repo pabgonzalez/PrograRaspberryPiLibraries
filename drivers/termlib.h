@@ -33,14 +33,42 @@
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
+/**
+ * @brief Get a key without waiting for it (no echo) 
+ * @return Next immediate character input 
+*/
+int getch(void);	    
 
-int getch(void);	          // Get a key without waiting for it (no echo) 
-int getche(void);	          // Get a key without waiting for it (with echo) 
-int kbhit(void);	          // Returns 1 if a key is waiting in the keyboad buffer
-void changemode(int);       // Turns terminal line buffering on or off
+/**
+ * @brief Get a key without waiting for it (with echo) 
+ * @return Next immediate character input 
+*/
+int getche(void);	   
+
+/**
+ * @brief Check if a key has been pressed at terminal  
+ * @return 1 if a key is waiting in the keyboad buffer
+*/
+int kbhit(void);	         
+
+/**
+ * @brief Turns terminal line buffering on or off
+*/
+void changemode(int);       
+
 //ansy.sys like
-void gotoxy(int x, int y);  // x is colum and y is row
-void clrscr();				      // Clear Screen 	
+
+/**
+ * @brief Set cursor position
+ * @param x is column
+ * @param y is row
+*/
+void gotoxy(int x, int y);  
+
+/**
+ * @brief Clear Screen 
+*/
+void clrscr(void);				      	
 
 
 /*******************************************************************************
