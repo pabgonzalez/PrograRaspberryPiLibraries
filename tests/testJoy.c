@@ -17,5 +17,5 @@ int main(void)
 		printf(CYAN_TEXT "(%4d, %4d)\n" , myCoords.x, myCoords.y);	
 	} while (joy_get_switch() == J_NOPRESS);	//mientras no se presione el switch
 	
-	return 1;
+	return 0;
 }
