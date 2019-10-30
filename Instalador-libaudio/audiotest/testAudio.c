@@ -25,9 +25,9 @@ int main(void)
 	else
 	{
 		printf("System not ready. Did you run init_sound() ? \n" );
-		return 0;
+		return 1;
 	}
 	while (player_status() == PLAYING) {};	//espera que el archivo termine de reproducirse
 	printf("Finished: %s\n", mySong);	
-	return 1;
+	return 0;
 }
